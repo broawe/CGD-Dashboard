@@ -1,0 +1,1290 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CGD Project 2026-2027 Dashboard</title>
+  <style>
+    :root {
+      --blue: #004165;
+      --blue-soft: #e8f2f7;
+      --red: #772432;
+      --gold: #f2df74;
+      --ink: #17212b;
+      --muted: #5d6b78;
+      --line: #d9e2ea;
+      --paper: #ffffff;
+      --page: #f5f8fb;
+      --green: #2f855a;
+      --amber: #b7791f;
+      --pink: #b83280;
+      --danger: #c53030;
+      --shadow: 0 18px 42px rgba(0, 65, 101, 0.12);
+      --radius: 8px;
+      font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      line-height: 1.5;
+    }
+
+    button { font: inherit; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(14px);
+    }
+
+    .wrap {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 74px;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 245px;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 48px;
+      height: 48px;
+      place-items: center;
+      border: 3px solid var(--gold);
+      border-radius: 50%;
+      color: #fff;
+      background: linear-gradient(135deg, var(--red), var(--blue));
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .brand-title {
+      margin: 0;
+      color: var(--blue);
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.15;
+    }
+
+    .brand-subtitle {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .nav a {
+      border-radius: 999px;
+      color: var(--blue);
+      padding: 8px 11px;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .nav a:hover,
+    .nav a:focus-visible {
+      background: var(--blue-soft);
+      outline: none;
+    }
+
+    .hero {
+      color: #fff;
+      background:
+        linear-gradient(120deg, rgba(0, 65, 101, 0.97), rgba(119, 36, 50, 0.92)),
+        repeating-linear-gradient(135deg, rgba(242, 223, 116, 0.22) 0 2px, transparent 2px 28px);
+      border-bottom: 6px solid var(--gold);
+    }
+
+    .hero-inner {
+      min-height: 318px;
+      padding: 54px 0 44px;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 900px;
+      margin: 0;
+      font-size: clamp(34px, 6vw, 66px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 760px;
+      margin: 20px 0 0;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 18px;
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .status-pill {
+      min-height: 38px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 999px;
+      padding: 8px 13px;
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.94);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .refresh {
+      min-height: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 999px;
+      padding: 9px 15px;
+      color: var(--blue);
+      background: var(--gold);
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .refresh:hover,
+    .refresh:focus-visible {
+      background: #ffe981;
+      outline: none;
+    }
+
+    main { padding: 30px 0 66px; }
+
+    .section {
+      padding: 34px 0;
+      scroll-margin-top: 92px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      margin: 0;
+      color: var(--blue);
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .section-meta {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .subsection-title {
+      margin: 28px 0 14px;
+      color: var(--red);
+      font-size: 21px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .grid { display: grid; gap: 16px; }
+    .kpi-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .health-charts { align-items: stretch; }
+    .health-charts .panel { display: grid; align-content: start; }
+
+    .card {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .panel { padding: 20px; }
+
+    .kpi {
+      position: relative;
+      overflow: hidden;
+      padding: 22px;
+    }
+
+    .kpi::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 5px;
+      background: linear-gradient(90deg, var(--gold), var(--red), var(--blue));
+    }
+
+    .kpi-label {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .kpi-value {
+      min-height: 56px;
+      color: var(--blue);
+      font-size: clamp(34px, 7vw, 52px);
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 5px 10px;
+      color: var(--blue);
+      background: #f8fbfd;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .chart {
+      display: grid;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: minmax(120px, 220px) 1fr minmax(44px, auto);
+      align-items: center;
+      gap: 12px;
+      min-height: 32px;
+    }
+
+    .bar-label {
+      overflow-wrap: anywhere;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .bar-track {
+      overflow: hidden;
+      height: 16px;
+      border-radius: 999px;
+      background: #e7eef5;
+    }
+
+    .bar-fill {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--blue), #0b6c90);
+    }
+
+    .bar-value {
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 900;
+      text-align: right;
+    }
+
+    .bar-fill.red { background: linear-gradient(90deg, #9b2c2c, var(--danger)); }
+    .bar-fill.pink { background: linear-gradient(90deg, #97266d, var(--pink)); }
+    .bar-fill.amber { background: linear-gradient(90deg, #975a16, var(--amber)); }
+    .bar-fill.green { background: linear-gradient(90deg, #276749, var(--green)); }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+    }
+
+    .chart-table { margin-top: 16px; }
+
+    table {
+      width: 100%;
+      min-width: 680px;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th,
+    td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--blue);
+      background: #f0f5f8;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+    tbody tr:hover { background: #fbfdff; }
+
+    .empty {
+      padding: 22px;
+      color: var(--muted);
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .show-more {
+      display: none;
+      align-items: center;
+      min-height: 40px;
+      margin-top: 12px;
+      border: 1px solid var(--blue);
+      border-radius: 999px;
+      padding: 9px 14px;
+      color: #fff;
+      background: var(--blue);
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .show-more.is-visible { display: inline-flex; }
+    .show-more:hover,
+    .show-more:focus-visible {
+      border-color: var(--red);
+      background: var(--red);
+      outline: none;
+    }
+
+    .rag-badge {
+      display: inline-flex;
+      justify-content: center;
+      min-width: 72px;
+      border-radius: 999px;
+      padding: 4px 9px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .rag-red { background: var(--danger); }
+    .rag-pink { background: var(--pink); }
+    .rag-amber { background: var(--amber); }
+    .rag-green { background: var(--green); }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tab {
+      min-height: 52px;
+      border: 0;
+      border-right: 1px solid var(--line);
+      color: var(--blue);
+      background: #f3f7fa;
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .tab:last-child { border-right: 0; }
+    .tab.is-active { color: #fff; background: var(--blue); }
+    .tab[data-quarter="q1"].is-active { background: var(--red); }
+    .tab[data-quarter="q2"].is-active { background: var(--green); }
+    .tab[data-quarter="q3"].is-active { color: var(--ink); background: var(--gold); }
+    .tab[data-quarter="q4"].is-active { background: var(--blue); }
+
+    .timeline-list {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .timeline-list.quarter-q1 {
+      background: #fff8f8;
+      border-top: 4px solid var(--red);
+    }
+
+    .timeline-list.quarter-q2 {
+      background: #f4fbf7;
+      border-top: 4px solid var(--green);
+    }
+
+    .timeline-list.quarter-q3 {
+      background: #fffdf0;
+      border-top: 4px solid var(--gold);
+    }
+
+    .timeline-list.quarter-q4 {
+      background: #f2f7fb;
+      border-top: 4px solid var(--blue);
+    }
+
+    .timeline-item {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .timeline-item.quarter-q1 { border-left: 6px solid var(--red); }
+    .timeline-item.quarter-q2 { border-left: 6px solid var(--green); }
+    .timeline-item.quarter-q3 { border-left: 6px solid var(--gold); }
+    .timeline-item.quarter-q4 { border-left: 6px solid var(--blue); }
+
+    .timeline-toggle {
+      display: grid;
+      width: 100%;
+      grid-template-columns: minmax(118px, 150px) 1fr auto auto;
+      align-items: center;
+      gap: 16px;
+      min-height: 74px;
+      border: 0;
+      padding: 14px 16px;
+      color: var(--ink);
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .timeline-toggle:hover,
+    .timeline-toggle:focus-visible {
+      background: #f7fafc;
+      outline: none;
+    }
+
+    .timeline-item.quarter-q1 .timeline-toggle:hover,
+    .timeline-item.quarter-q1 .timeline-toggle:focus-visible { background: #fff1f2; }
+
+    .timeline-item.quarter-q2 .timeline-toggle:hover,
+    .timeline-item.quarter-q2 .timeline-toggle:focus-visible { background: #ebf8f0; }
+
+    .timeline-item.quarter-q3 .timeline-toggle:hover,
+    .timeline-item.quarter-q3 .timeline-toggle:focus-visible { background: #fff8d6; }
+
+    .timeline-item.quarter-q4 .timeline-toggle:hover,
+    .timeline-item.quarter-q4 .timeline-toggle:focus-visible { background: #e8f2f7; }
+
+    .timeline-date {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      min-width: 104px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .timeline-item.quarter-q1 .timeline-date { background: var(--red); }
+    .timeline-item.quarter-q2 .timeline-date { background: var(--green); }
+    .timeline-item.quarter-q3 .timeline-date { color: var(--ink); background: var(--gold); }
+    .timeline-item.quarter-q4 .timeline-date { background: var(--blue); }
+
+    .timeline-title {
+      overflow-wrap: anywhere;
+      color: var(--blue);
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .timeline-quarter {
+      justify-self: end;
+      border-radius: 999px;
+      padding: 5px 9px;
+      color: var(--muted);
+      background: #eef4f8;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .timeline-arrow {
+      display: inline-grid;
+      width: 28px;
+      height: 28px;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--blue);
+      font-weight: 900;
+    }
+
+    .timeline-details {
+      display: none;
+      border-top: 1px solid var(--line);
+      padding: 14px 18px 18px 184px;
+      color: var(--muted);
+    }
+
+    .timeline-item.is-open .timeline-details { display: block; }
+
+    .timeline-item.quarter-q1.is-open .timeline-details { background: #fff1f2; }
+    .timeline-item.quarter-q2.is-open .timeline-details { background: #ebf8f0; }
+    .timeline-item.quarter-q3.is-open .timeline-details { background: #fff8d6; }
+    .timeline-item.quarter-q4.is-open .timeline-details { background: #e8f2f7; }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 18px;
+    }
+
+    .detail-grid > div {
+      border-left: 3px solid rgba(0, 65, 101, 0.18);
+      padding-left: 10px;
+    }
+
+    .detail-label {
+      color: var(--ink);
+      font-weight: 900;
+    }
+
+    .alert {
+      display: none;
+      margin-top: 16px;
+      border: 1px solid #fed7d7;
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      color: #742a2a;
+      background: #fff5f5;
+      font-weight: 800;
+    }
+
+    .alert.is-visible { display: block; }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0 40px;
+      color: var(--muted);
+      background: #fff;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    body.is-loading .kpi-value,
+    body.is-loading .chart,
+    body.is-loading .table-wrap,
+    body.is-loading .timeline-list {
+      opacity: 0.55;
+    }
+
+    @media (max-width: 900px) {
+      .topbar-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 14px 0;
+      }
+
+      .nav { justify-content: flex-start; }
+      .kpi-grid,
+      .two-col { grid-template-columns: 1fr; }
+      .bar-row { grid-template-columns: 1fr minmax(0, 1fr) auto; }
+      .timeline-toggle { grid-template-columns: 1fr auto auto; }
+      .timeline-date { grid-column: 1 / -1; }
+      .timeline-details { padding-left: 10px; }
+    }
+
+    @media (max-width: 640px) {
+      .wrap { width: min(100% - 22px, 1180px); }
+      .hero-inner { min-height: 310px; padding: 40px 0 34px; }
+      .hero-copy { font-size: 16px; }
+      .section { padding: 24px 0; }
+      .section-head { display: block; }
+      .section-meta { margin-top: 8px; }
+      .kpi,
+      .panel { padding: 16px; }
+      .bar-row { grid-template-columns: 1fr auto; }
+      .bar-track { grid-column: 1 / -1; grid-row: 2; }
+      .tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .tab { border-bottom: 1px solid var(--line); }
+      .detail-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="is-loading">
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">
+        <div class="brand-mark">D87</div>
+        <div>
+          <p class="brand-title">District 87 Official Website</p>
+          <p class="brand-subtitle">Brunei Darussalam, East Malaysia, Indonesia, Timor-Leste</p>
+        </div>
+      </div>
+      <nav class="nav" aria-label="Dashboard sections">
+        <a href="#overview">Overview</a>
+        <a href="#leaderboard">Leaderboard</a>
+        <a href="#pipeline">Pipeline</a>
+        <a href="#health">Health</a>
+        <a href="#activity">Activity</a>
+        <a href="#timeline">Timeline</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <p class="eyebrow">Club Growth Director</p>
+      <h1>CGD Project 2026-2027 Dashboard</h1>
+      <p class="hero-copy">A live view of pipeline, clubs, membership, health status, recent activity, and quarterly CGD priorities for District 87 members.</p>
+      <div class="status-row">
+        <div id="status" class="status-pill">Loading Google Sheets data...</div>
+        <button id="refresh" class="refresh" type="button">Refresh Data</button>
+      </div>
+      <div id="loadAlert" class="alert" role="alert"></div>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <section id="overview" class="section">
+      <div class="section-head">
+        <h2 class="section-title">Executive Overview</h2>
+        <div class="section-meta">Live Google Sheets metrics</div>
+      </div>
+      <div class="grid kpi-grid">
+        <article class="card kpi">
+          <p class="kpi-label">Active Pipeline</p>
+          <div id="activePipeline" class="kpi-value">--</div>
+          <div class="tags">
+            <span id="corporatePipeline" class="tag">Corporate: --</span>
+            <span id="communityPipeline" class="tag">Community: --</span>
+          </div>
+        </article>
+        <article class="card kpi">
+          <p class="kpi-label">Current Clubs</p>
+          <div id="currentClubs" class="kpi-value">--</div>
+          <div class="tags"><span class="tag">Across reporting divisions</span></div>
+        </article>
+        <article class="card kpi">
+          <p class="kpi-label">Active Members</p>
+          <div id="activeMembers" class="kpi-value">--</div>
+          <div class="tags"><span class="tag">Current active membership count</span></div>
+        </article>
+      </div>
+
+      <h3 class="subsection-title">Club Growth Goal And Accomplishment</h3>
+      <div class="card panel">
+        <div id="goalsTable" class="table-wrap"></div>
+      </div>
+    </section>
+
+    <section id="leaderboard" class="section">
+      <div class="section-head">
+        <h2 class="section-title">Leaderboard</h2>
+        <div class="section-meta">Division by total</div>
+      </div>
+      <div class="card panel">
+        <div id="leaderboardChart" class="chart"></div>
+      </div>
+    </section>
+
+    <section id="pipeline" class="section">
+      <div class="section-head">
+        <h2 class="section-title">Pipeline</h2>
+        <div class="section-meta">Pipeline stage and detail</div>
+      </div>
+      <div class="card panel">
+        <h3 class="subsection-title" style="margin-top: 0;">Pipeline Stage</h3>
+        <div id="pipelineStageChart" class="chart"></div>
+      </div>
+
+      <h3 class="subsection-title">Detailed Pipeline</h3>
+      <div class="card panel">
+        <div id="pipelineTable" class="table-wrap"></div>
+        <button id="pipelineMore" class="show-more" type="button">Show more pipeline data</button>
+      </div>
+    </section>
+
+    <section id="health" class="section">
+      <div class="section-head">
+        <h2 class="section-title">Club Health Status</h2>
+        <div class="section-meta">RAG and coach attention</div>
+      </div>
+      <div class="grid two-col health-charts">
+        <div class="card panel">
+          <h3 class="subsection-title" style="margin-top: 0;">RAG Distribution</h3>
+          <div id="ragChart" class="chart"></div>
+        </div>
+        <div class="card panel">
+          <h3 class="subsection-title" style="margin-top: 0;">Coach Status</h3>
+          <div id="coachChart" class="chart"></div>
+        </div>
+      </div>
+
+      <h3 class="subsection-title">Clubs Required Attention</h3>
+      <div class="card panel">
+        <div id="clubTable" class="table-wrap"></div>
+        <button id="clubMore" class="show-more" type="button">Show more club data</button>
+      </div>
+    </section>
+
+    <section id="activity" class="section">
+      <div class="section-head">
+        <h2 class="section-title">Recent Activity</h2>
+        <div class="section-meta">Most recent five shown first</div>
+      </div>
+      <div class="card panel">
+        <div id="activityTable" class="table-wrap"></div>
+        <button id="activityMore" class="show-more" type="button">Show more activities data</button>
+      </div>
+    </section>
+
+    <section id="timeline" class="section">
+      <div class="section-head">
+        <h2 class="section-title">CGD Activities Timeline</h2>
+        <div class="section-meta">Click a quarter, then an item</div>
+      </div>
+      <div class="card">
+        <div class="tabs" role="tablist" aria-label="Timeline quarter">
+          <button class="tab is-active" type="button" data-quarter="q1">Q1</button>
+          <button class="tab" type="button" data-quarter="q2">Q2</button>
+          <button class="tab" type="button" data-quarter="q3">Q3</button>
+          <button class="tab" type="button" data-quarter="q4">Q4</button>
+        </div>
+        <div id="timelineList" class="timeline-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">CGD Project 2026-2027 Dashboard. Built for GitHub Pages with live Google Sheets data.</footer>
+
+  <script>
+    const SPREADSHEET_ID = "1qh1pvzwNYmeFtTBvcqzibktzHv22IIBImFu9m0m3y-U";
+    const APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz2uSP3b0Lz8ZbDk521bubn24QQUNxAsP1rZ44mwWl2EDPQklUzeaqhL40oEm-TpmW_SQ/exec";
+    const GIDS = {
+      goals: "40236711",
+      pipeline: "767110667",
+      membership: "155940476",
+      leaderboard: "1527349450",
+      health: "1080589180",
+      activities: "1137725091",
+      q1: "1975615140",
+      q2: "1571253162",
+      q3: "266827446",
+      q4: "1451415558"
+    };
+
+    const STAGES = ["Hot Lead", "Demo Scheduled", "Chartered", "Initial Contact", "In Chartering"];
+    const RAG_ORDER = ["Red", "Pink", "Amber", "Green"];
+    const SENTINEL = /^(automatically filled|fill manually)$/i;
+    const PIPELINE_OVERVIEW_GID = "40236711";
+    const PIPELINE_OVERVIEW_RANGE = "A33:C33";
+    const state = { sheets: {}, timeline: {}, activeQuarter: "q1", errors: [] };
+    const $ = (selector) => document.querySelector(selector);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      $("#refresh").addEventListener("click", loadDashboard);
+      document.querySelectorAll(".tab").forEach((button) => {
+        button.addEventListener("click", () => setQuarter(button.dataset.quarter));
+      });
+      loadDashboard();
+    });
+
+    async function loadDashboard() {
+      document.body.classList.add("is-loading");
+      $("#refresh").disabled = true;
+      setStatus("Loading Google Sheets data...");
+      showAlert("");
+      state.errors = [];
+      state.sheets = {};
+
+      for (const [name, gid] of Object.entries(GIDS)) {
+        try {
+          state.sheets[name] = await loadSheet(gid);
+        } catch (error) {
+          state.sheets[name] = [];
+          state.errors.push(`${name}: ${error.message}`);
+        }
+      }
+      state.sheets.pipelineOverview = await loadSheet(PIPELINE_OVERVIEW_GID, PIPELINE_OVERVIEW_RANGE).catch(() => []);
+
+      renderAll();
+      const loaded = Object.keys(GIDS).filter((name) => state.sheets[name]?.length).length;
+      const stamp = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" }).format(new Date());
+      setStatus(`${loaded}/${Object.keys(GIDS).length} sheets loaded: ${stamp}`);
+      if (state.errors.length) {
+        showAlert("Some Google Sheets tabs could not be loaded. Make sure the spreadsheet is shared as Anyone with the link can view. Tabs affected: " + state.errors.join("; "));
+      }
+      $("#refresh").disabled = false;
+      document.body.classList.remove("is-loading");
+    }
+
+    async function loadSheet(gid, range = "") {
+      try {
+        const payload = await loadGvizJsonp(gid, range);
+        const rows = normalizeGviz(payload);
+        if (rows.length) return rows.map(cleanRow);
+      } catch (error) {
+        console.warn("GViz JSONP failed", gid, error);
+      }
+
+      const rangeParam = range ? `&range=${encodeURIComponent(range)}` : "";
+      const response = await fetch(`${APP_SCRIPT_URL}?gid=${encodeURIComponent(gid)}${rangeParam}`, { cache: "no-store" });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const text = await response.text();
+      return normalizeTextPayload(text).map(cleanRow);
+    }
+
+    function loadGvizJsonp(gid, range = "") {
+      return new Promise((resolve, reject) => {
+        const callback = `cgdSheet_${gid}_${Date.now()}_${Math.floor(Math.random() * 100000)}`;
+        const previousGoogle = window.google;
+        const script = document.createElement("script");
+        let settled = false;
+        const timer = window.setTimeout(() => finish(null, new Error("Google Sheets timed out")), 15000);
+
+        function finish(payload, error) {
+          if (settled) return;
+          settled = true;
+          window.clearTimeout(timer);
+          delete window[callback];
+          script.remove();
+          window.google = previousGoogle;
+          error ? reject(error) : resolve(payload);
+        }
+
+        window[callback] = (payload) => finish(payload, null);
+        window.google = window.google || {};
+        window.google.visualization = window.google.visualization || {};
+        window.google.visualization.Query = window.google.visualization.Query || {};
+        window.google.visualization.Query.setResponse = (payload) => finish(payload, null);
+
+        script.onerror = () => finish(null, new Error("Google Sheets script load failed"));
+        const params = new URLSearchParams({
+          gid,
+          headers: "0",
+          tqx: `responseHandler:${callback};out:json`
+        });
+        if (range) params.set("range", range);
+        script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?${params.toString()}`;
+        document.head.appendChild(script);
+      });
+    }
+
+    function normalizeGviz(payload) {
+      if (!payload || payload.status === "error") {
+        throw new Error(payload?.errors?.[0]?.detailed_message || "Google Sheets returned an error");
+      }
+      const rows = payload.table?.rows || [];
+      return rows.map((row) => (row.c || []).map((cell) => cell ? (cell.f ?? cell.v ?? "") : ""));
+    }
+
+    function normalizeTextPayload(text) {
+      const trimmed = String(text || "").trim();
+      if (!trimmed) return [];
+      if (trimmed.includes("google.visualization.Query.setResponse")) {
+        const json = trimmed.slice(trimmed.indexOf("(") + 1, trimmed.lastIndexOf(")"));
+        return normalizeGviz(JSON.parse(json));
+      }
+      if (trimmed.startsWith("{") || trimmed.startsWith("[")) {
+        return normalizeJson(JSON.parse(trimmed));
+      }
+      return parseCsv(trimmed);
+    }
+
+    function normalizeJson(data) {
+      if (Array.isArray(data)) {
+        if (data.every(Array.isArray)) return data;
+        if (data.every((row) => row && typeof row === "object")) return objectRows(data);
+      }
+      for (const key of ["values", "data", "rows", "items", "result"]) {
+        if (Array.isArray(data?.[key])) return normalizeJson(data[key]);
+      }
+      return [];
+    }
+
+    function objectRows(items) {
+      const headers = [...items.reduce((set, item) => {
+        Object.keys(item).forEach((key) => set.add(key));
+        return set;
+      }, new Set())];
+      return [headers, ...items.map((item) => headers.map((header) => item[header] ?? ""))];
+    }
+
+    function parseCsv(text) {
+      const rows = [];
+      let row = [];
+      let value = "";
+      let quoted = false;
+      for (let i = 0; i < text.length; i += 1) {
+        const char = text[i];
+        const next = text[i + 1];
+        if (char === '"') {
+          if (quoted && next === '"') {
+            value += '"';
+            i += 1;
+          } else {
+            quoted = !quoted;
+          }
+        } else if (char === "," && !quoted) {
+          row.push(value);
+          value = "";
+        } else if ((char === "\n" || char === "\r") && !quoted) {
+          if (char === "\r" && next === "\n") i += 1;
+          row.push(value);
+          rows.push(row);
+          row = [];
+          value = "";
+        } else {
+          value += char;
+        }
+      }
+      row.push(value);
+      rows.push(row);
+      return rows;
+    }
+
+    function renderAll() {
+      renderOverview();
+      renderGoals();
+      renderLeaderboard();
+      renderPipeline();
+      renderHealth();
+      renderActivities();
+      renderTimeline();
+    }
+
+    function renderOverview() {
+      const pipelineOverview = state.sheets.pipelineOverview?.[0] || [];
+      $("#activePipeline").textContent = display(hasValue(pipelineOverview[0]) ? pipelineOverview[0] : cell(state.sheets.goals, "A33"));
+      $("#corporatePipeline").textContent = `Corporate: ${display(hasValue(pipelineOverview[1]) ? pipelineOverview[1] : cell(state.sheets.goals, "B33"))}`;
+      $("#communityPipeline").textContent = `Community: ${display(hasValue(pipelineOverview[2]) ? pipelineOverview[2] : cell(state.sheets.goals, "C33"))}`;
+      $("#currentClubs").textContent = display(cell(state.sheets.membership, "C8"));
+      $("#activeMembers").textContent = display(cell(state.sheets.membership, "G8"));
+    }
+
+    function renderGoals() {
+      renderTable("#goalsTable", ["Goals", "Owner", "Target", "Status"], rangeRows(state.sheets.goals, 2, 6, ["A", "B", "C", "G"]));
+    }
+
+    function renderLeaderboard() {
+      const data = sliceRows(state.sheets.leaderboard, 2, 250)
+        .map((row) => ({ label: text(row[col("B")]), value: number(row[col("I")]) }))
+        .filter((item) => item.label && item.value > 0)
+        .sort((a, b) => b.value - a.value);
+      renderBars("#leaderboardChart", data);
+    }
+
+    function renderPipeline() {
+      const counts = Object.fromEntries(STAGES.map((stage) => [stage, 0]));
+      rangeRows(state.sheets.pipeline, 2, 100, ["D"]).forEach(([stage]) => {
+        const match = STAGES.find((item) => item.toLowerCase() === text(stage).toLowerCase());
+        if (match) counts[match] += 1;
+      });
+      renderBars("#pipelineStageChart", STAGES.map((stage) => ({ label: stage, value: counts[stage] })));
+      renderExpandableTable({
+        tableSelector: "#pipelineTable",
+        buttonSelector: "#pipelineMore",
+        headers: ["Organization Name", "Division", "Stage", "Club Leads"],
+        rows: rangeRows(state.sheets.pipeline, 2, 100, ["A", "C", "D", "E"]),
+        limit: 5
+      });
+    }
+
+    function renderHealth() {
+      const ragCounts = Object.fromEntries(RAG_ORDER.map((rag) => [rag, 0]));
+      sliceRows(state.sheets.health, 2, 500).forEach((row) => {
+        const match = RAG_ORDER.find((rag) => rag.toLowerCase() === text(row[col("G")]).toLowerCase());
+        if (match) ragCounts[match] += 1;
+      });
+      renderBars("#ragChart", RAG_ORDER.map((rag) => ({ label: rag, value: ragCounts[rag], className: rag.toLowerCase() })));
+
+      let needCoach = 0;
+      let notAssigned = 0;
+      sliceRows(state.sheets.health, 2, 500).forEach((row) => {
+        if (text(row[col("H")]).toLowerCase() === "need coach") needCoach += 1;
+        if (text(row[col("I")]).toLowerCase() === "coach not yet assigned") notAssigned += 1;
+      });
+      renderBars("#coachChart", [
+        { label: "Need Coach", value: needCoach, className: "amber" },
+        { label: "Coach Not Yet Assigned", value: notAssigned, className: "red" }
+      ]);
+
+      const clubs = sliceRows(state.sheets.health, 2, 500)
+        .map((row) => [row[col("A")], row[col("B")], row[col("E")], row[col("G")]])
+        .filter((row) => row.some(hasValue))
+        .sort((a, b) => number(a[2]) - number(b[2]));
+      renderExpandableTable({
+        tableSelector: "#clubTable",
+        buttonSelector: "#clubMore",
+        headers: ["Club Name", "Division", "To Date Membership", "RAG Status"],
+        rows: clubs,
+        limit: 5,
+        cell: (value, index) => index === 3 ? ragBadge(value) : escapeHtml(value)
+      });
+    }
+
+    function renderActivities() {
+      const rows = sliceRows(state.sheets.activities, 2, 500)
+        .map((row) => [row[col("A")], row[col("C")], row[col("E")], row[col("D")], row[col("F")]])
+        .filter((row) => row.some(hasValue))
+        .sort((a, b) => parseDateValue(b[0]) - parseDateValue(a[0]));
+      renderExpandableTable({
+        tableSelector: "#activityTable",
+        buttonSelector: "#activityMore",
+        headers: ["Date", "Role", "Activity Type", "Assigned Club", "Summary"],
+        rows,
+        limit: 5
+      });
+    }
+
+    function renderTimeline() {
+      state.timeline = {
+        q1: timelineItems(state.sheets.q1),
+        q2: timelineItems(state.sheets.q2),
+        q3: timelineItems(state.sheets.q3),
+        q4: timelineItems(state.sheets.q4)
+      };
+      setQuarter(state.activeQuarter);
+    }
+
+    function timelineItems(rows) {
+      const headers = (rows[0] || []).map((value, index) => text(value) || `Column ${index + 1}`);
+      return sliceRows(rows, 2, 500)
+        .map((row) => {
+          const values = row.map(text);
+          const fields = values.map((value, index) => ({ label: headers[index] || `Column ${index + 1}`, value })).filter((item) => item.value);
+          const dateIndex = values.findIndex((value) => value && parseDateValue(value));
+          const date = dateIndex >= 0 ? values[dateIndex] : values[0] || "";
+          const title = values.find((value, index) => value && index !== dateIndex) || date || "Timeline Item";
+          return { date, title, fields };
+        })
+        .filter((item) => item.fields.length)
+        .sort((a, b) => parseDateValue(a.date) - parseDateValue(b.date));
+    }
+
+    function setQuarter(quarter) {
+      state.activeQuarter = quarter;
+      document.querySelectorAll(".tab").forEach((button) => button.classList.toggle("is-active", button.dataset.quarter === quarter));
+      const items = state.timeline[quarter] || [];
+      const list = $("#timelineList");
+      list.className = `timeline-list quarter-${quarter}`;
+      if (!items.length) {
+        list.innerHTML = `<div class="empty">No timeline data available.</div>`;
+        return;
+      }
+      list.innerHTML = items.map((item, index) => `
+        <div class="timeline-item quarter-${quarter}">
+          <button class="timeline-toggle" type="button" aria-expanded="false" data-index="${index}">
+            <span class="timeline-date">${escapeHtml(item.date || "Date TBC")}</span>
+            <span class="timeline-title">${escapeHtml(item.title)}</span>
+            <span class="timeline-quarter">${quarter.toUpperCase()}</span>
+            <span class="timeline-arrow">+</span>
+          </button>
+          <div class="timeline-details">
+            <div class="detail-grid">
+              ${item.fields.map((field) => `<div><span class="detail-label">${escapeHtml(field.label)}:</span> ${escapeHtml(field.value)}</div>`).join("")}
+            </div>
+          </div>
+        </div>
+      `).join("");
+      list.querySelectorAll(".timeline-toggle").forEach((button) => {
+        button.addEventListener("click", () => {
+          const item = button.closest(".timeline-item");
+          const open = item.classList.toggle("is-open");
+          button.setAttribute("aria-expanded", String(open));
+          button.querySelector(".timeline-arrow").textContent = open ? "-" : "+";
+        });
+      });
+    }
+
+    function renderBars(selector, rows) {
+      const element = $(selector);
+      const data = rows.filter((row) => row.label);
+      if (!data.length) {
+        element.innerHTML = `<div class="empty">No chart data available.</div>`;
+        return;
+      }
+      const max = Math.max(1, ...data.map((row) => row.value));
+      element.innerHTML = data.map((row) => {
+        const width = row.value ? Math.max(5, Math.round((row.value / max) * 100)) : 0;
+        const extra = row.className ? ` ${row.className}` : "";
+        return `
+          <div class="bar-row">
+            <div class="bar-label">${escapeHtml(row.label)}</div>
+            <div class="bar-track"><div class="bar-fill${extra}" style="width:${width}%"></div></div>
+            <div class="bar-value">${display(row.value)}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderExpandableTable({ tableSelector, buttonSelector, headers, rows, limit, cell }) {
+      const button = $(buttonSelector);
+      let expanded = false;
+      const label = button.id === "pipelineMore" ? "pipeline data" : button.id === "clubMore" ? "club data" : "activities data";
+      const draw = () => {
+        renderTable(tableSelector, headers, expanded ? rows : rows.slice(0, limit), { cell });
+        button.classList.toggle("is-visible", rows.length > limit);
+        button.textContent = expanded ? `Show less ${label}` : `Show more ${label}`;
+      };
+      button.onclick = () => {
+        expanded = !expanded;
+        draw();
+      };
+      draw();
+    }
+
+    function renderTable(selector, headers, rows, options = {}) {
+      const element = $(selector);
+      if (!rows.length) {
+        element.innerHTML = `<div class="empty">No table data available.</div>`;
+        return;
+      }
+      const formatCell = options.cell || ((value) => escapeHtml(value));
+      element.innerHTML = `
+        <table>
+          <thead><tr>${headers.map((header) => `<th>${escapeHtml(header)}</th>`).join("")}</tr></thead>
+          <tbody>
+            ${rows.map((row) => `<tr>${headers.map((_, index) => `<td>${formatCell(row[index] ?? "", index, row)}</td>`).join("")}</tr>`).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function cell(rows, address) {
+      const match = /^([A-Z]+)(\d+)$/i.exec(address);
+      if (!match) return "";
+      return rows?.[Number(match[2]) - 1]?.[col(match[1])] ?? "";
+    }
+
+    function rangeRows(rows, start, end, columns) {
+      return sliceRows(rows, start, end).map((row) => columns.map((letter) => row[col(letter)] ?? "")).filter((row) => row.some(hasValue));
+    }
+
+    function sliceRows(rows, start, end) {
+      return (rows || []).slice(start - 1, end);
+    }
+
+    function col(letters) {
+      return letters.toUpperCase().split("").reduce((sum, char) => sum * 26 + char.charCodeAt(0) - 64, 0) - 1;
+    }
+
+    function cleanRow(row) {
+      return Array.from(row || []).map((value) => {
+        const cleaned = value == null ? "" : String(value).trim();
+        return SENTINEL.test(cleaned) ? "" : cleaned;
+      });
+    }
+
+    function hasValue(value) {
+      return text(value) !== "";
+    }
+
+    function text(value) {
+      return String(value ?? "").trim().replace(/\s+/g, " ");
+    }
+
+    function number(value) {
+      const match = text(value).replace(/,/g, "").match(/-?\d+(\.\d+)?/);
+      return match ? Number(match[0]) : 0;
+    }
+
+    function display(value) {
+      if (value === "" || value == null) return "--";
+      if (typeof value === "number") return new Intl.NumberFormat().format(value);
+      const valueText = text(value);
+      const numeric = valueText.replace(/,/g, "");
+      return /^-?\d+(\.\d+)?$/.test(numeric) ? new Intl.NumberFormat().format(Number(numeric)) : valueText || "--";
+    }
+
+    function ragRank(value) {
+      const index = RAG_ORDER.findIndex((rag) => rag.toLowerCase() === text(value).toLowerCase());
+      return index >= 0 ? index : 99;
+    }
+
+    function ragBadge(value) {
+      const label = text(value);
+      const key = label.toLowerCase();
+      return ["red", "pink", "amber", "green"].includes(key)
+        ? `<span class="rag-badge rag-${key}">${escapeHtml(label)}</span>`
+        : escapeHtml(label);
+    }
+
+    function parseDateValue(value) {
+      const raw = text(value);
+      if (!raw) return 0;
+      const parsed = Date.parse(raw);
+      if (!Number.isNaN(parsed)) return parsed;
+      const match = /^(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})$/.exec(raw);
+      if (!match) return 0;
+      const day = Number(match[1]);
+      const month = Number(match[2]) - 1;
+      const year = Number(match[3].length === 2 ? `20${match[3]}` : match[3]);
+      return new Date(year, month, day).getTime();
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function setStatus(message) {
+      $("#status").textContent = message;
+    }
+
+    function showAlert(message) {
+      const alert = $("#loadAlert");
+      alert.textContent = message;
+      alert.classList.toggle("is-visible", Boolean(message));
+    }
+  </script>
+</body>
+</html>
+
